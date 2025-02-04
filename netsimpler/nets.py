@@ -23,7 +23,6 @@ def add_rule(chain: str, protocol: str, port: str, action: str, source: str = No
     if dest:
         cmd.extend(["-d", dest])
     if log:
-        # cmd.extend(["-j", "LOG", "--log-prefix", "'Netfilter:'"])
         log_cmd = ["sudo", "ip6tables" if ipv6 else "iptables", "-A", chain, "-p", protocol, "--dport", port, "-j", "LOG", "--log-prefix", "'Netfilter:'"]
         print(cmd)
         run_command(log_cmd)
