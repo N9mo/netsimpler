@@ -1,6 +1,5 @@
 import argparse
 import subprocess
-import json
 
 def run_command(command: list):
     """Execute a system command and return its output."""
