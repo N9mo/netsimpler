@@ -12,7 +12,6 @@ def run_command(command: list):
 def list_rules(ipv6: bool = False):
     """List all iptables rules for IPv4 or IPv6."""
     cmd = ["sudo", "ip6tables" if ipv6 else "iptables", "-L", "-v", "-n"]
-    print(cmd)
     return run_command(cmd)
 
 def add_rule(chain: str, protocol: str, port: str, action: str, source: str = None, dest: str = None, log: bool = False, ipv6: bool = False):
@@ -24,9 +23,7 @@ def add_rule(chain: str, protocol: str, port: str, action: str, source: str = No
         cmd.extend(["-d", dest])
     if log:
         log_cmd = ["sudo", "ip6tables" if ipv6 else "iptables", "-A", chain, "-p", protocol, "--dport", port, "-j", "LOG", "--log-prefix", "'Netfilter:'"]
-        print(cmd)
         run_command(log_cmd)
-        print(log_cmd)
     return run_command(cmd)
 
 def delete_rule(chain: str, protocol: str, port: str, action: str, source: str = None, dest: str = None, ipv6: bool = False):
@@ -36,7 +33,6 @@ def delete_rule(chain: str, protocol: str, port: str, action: str, source: str =
         cmd.extend(["-s", source])
     if dest:
         cmd.extend(["-d", dest])
-        print(cmd)
     return run_command(cmd)
 
 def save_rules():
@@ -66,6 +62,7 @@ def main():
     add_parser.add_argument("--dest", help="Destination IP address")
     add_parser.add_argument("--log", action="store_true", help="Enable logging for this rule")
     add_parser.add_argument("--ipv6", action="store_true", help="Apply to IPv6")
+    add_parser.print_help()
 
     # Delete rule
     del_parser = subparsers.add_parser("delete", help="Delete an iptables rule")
@@ -93,8 +90,6 @@ def main():
         print(save_rules())
     elif args.command == "load":
         print(load_rules())
-    else:
-        parser.print_help()
 
 if __name__ == "__main__":
     main()
