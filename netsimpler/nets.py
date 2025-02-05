@@ -62,7 +62,6 @@ def main():
     add_parser.add_argument("--dest", help="Destination IP address")
     add_parser.add_argument("--log", action="store_true", help="Enable logging for this rule")
     add_parser.add_argument("--ipv6", action="store_true", help="Apply to IPv6")
-    add_parser.print_help()
 
     # Delete rule
     del_parser = subparsers.add_parser("delete", help="Delete an iptables rule")
